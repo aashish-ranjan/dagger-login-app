@@ -1,12 +1,13 @@
 package com.aashish.daggerloginapp.network.auth;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
+import com.aashish.daggerloginapp.models.User;
+
+import io.reactivex.rxjava3.core.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface AuthApi {
 
     @GET("users/{id}")
-    Call<ResponseBody> getUsers(@Path("id") String userId);
+    Flowable<User> getUsers(@Path("id") String id);
 }

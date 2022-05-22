@@ -61,4 +61,8 @@ dependencies {
     def retrofitVersion = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
+
+    def rxJavaVersion = "3.0.0"
+    implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
 }
