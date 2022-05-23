@@ -1,5 +1,6 @@
 package com.aashish.daggerloginapp.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -68,8 +69,9 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
             @Override
             public void onChanged(AuthResource<User> user) {
                 switch (user.status) {
-                    case SUCCESS: {
+                    case AUTHENTICATED: {
                         showProgressBar(false);
+                        navigateToHome(user.data);
                         Log.d(TAG, "onChanged: SUCCESS. User email is " + user.data.getEmail());
                         break;
                     }
@@ -82,9 +84,19 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
                         showProgressBar(true);
                         break;
                     }
+                    case NOT_AUTHENTICATED: {
+                        Log.d(TAG, "onChanged: NOT AUTHENTICATED..");
+                        break;
+                    }
                 }
             }
         });
+    }
+
+    private void navigateToHome(User user) {
+        Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+        intent.putExtra("user_info", user.toString());
+        startActivity(intent);
     }
 
     private void showProgressBar(Boolean shouldShowLoader) {

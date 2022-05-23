@@ -1,6 +1,7 @@
 package com.aashish.daggerloginapp.di;
 
 import com.aashish.daggerloginapp.ui.AuthActivity;
+import com.aashish.daggerloginapp.ui.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -12,4 +13,7 @@ public abstract class ActivityBuildersModule {
             modules = {AuthViewModelsModule.class, AuthModule.class}
     )
     abstract AuthActivity contributesAuthActivity();
+
+    @ContributesAndroidInjector
+    abstract MainActivity contributesMainActivity();
 }

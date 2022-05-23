@@ -1,5 +1,7 @@
 package com.aashish.daggerloginapp.models;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 public class User {
@@ -47,5 +49,11 @@ public class User {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("Id: %s\nUserName: %s\nEmail: %s\nWebsite: %s", id, userName, email, website);
     }
 }

@@ -15,16 +15,20 @@ public class AuthResource<T> {
     }
 
     public static <T> AuthResource<T> success(@Nullable T data) {
-        return new AuthResource(data, null, Status.SUCCESS);
+        return new AuthResource<T>(data, null, Status.AUTHENTICATED);
     }
 
     public static <T> AuthResource<T> error(@Nullable T data, @Nullable String message) {
-        return new AuthResource(data, message, Status.ERROR);
+        return new AuthResource<T>(data, message, Status.ERROR);
     }
 
     public static <T> AuthResource<T> loading(@Nullable T data) {
         return new AuthResource(data, null, Status.LOADING);
     }
 
-    public enum Status {SUCCESS, ERROR, LOADING};
+    public static <T> AuthResource<T> logout() {
+        return new AuthResource<>(null, null, Status.NOT_AUTHENTICATED);
+    }
+
+    public enum Status {AUTHENTICATED, ERROR, LOADING, NOT_AUTHENTICATED};
 }
