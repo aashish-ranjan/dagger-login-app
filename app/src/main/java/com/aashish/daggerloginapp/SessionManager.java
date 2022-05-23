@@ -27,6 +27,10 @@ public class SessionManager {
         });
     }
 
+    public void logout() {
+        _cachedUser.setValue(AuthResource.logout());
+    }
+
     public MediatorLiveData<AuthResource<User>> getAuthUser() {
         return _cachedUser;
     }
