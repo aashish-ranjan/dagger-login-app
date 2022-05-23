@@ -5,9 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.aashish.daggerloginapp.SessionManager;
 import com.aashish.daggerloginapp.models.AuthResource;
 import com.aashish.daggerloginapp.models.User;
 import com.aashish.daggerloginapp.network.auth.AuthApi;
@@ -20,18 +20,22 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class AuthViewModel extends ViewModel {
     private static final String TAG = "AuthViewModel";
     private final AuthApi authApi;
-
-    private final MediatorLiveData<AuthResource<User>> _authUser = new MediatorLiveData<>();
+    private final SessionManager mSessionManager;
 
     @Inject
-    public AuthViewModel(AuthApi authApi) {
+    public AuthViewModel(AuthApi authApi, SessionManager sessionManager) {
         Log.d(TAG, "AuthViewModel: constructor initialized");
         this.authApi = authApi;
+        this.mSessionManager = sessionManager;
     }
 
-    public void getUserInfo(String userId) {
-        _authUser.setValue(AuthResource.loading((User)null));
-        final LiveData<AuthResource<User>> source = LiveDataReactiveStreams.fromPublisher(
+    public void attemptLoginByUserId(String userId) {
+        LiveData<AuthResource<User>> _authUser = queryUserById(userId);
+        mSessionManager.authenticateWithId(_authUser);
+    }
+
+    private LiveData<AuthResource<User>> queryUserById(String userId) {
+        return LiveDataReactiveStreams.fromPublisher(
                 authApi.getUsers(userId)
                         .onErrorReturn(new Function<Throwable, User>() {
                             @Override
@@ -53,17 +57,9 @@ public class AuthViewModel extends ViewModel {
                         })
                         .subscribeOn(Schedulers.io())
         );
-
-        _authUser.addSource(source, new Observer<AuthResource<User>>() {
-            @Override
-            public void onChanged(AuthResource<User> user) {
-                _authUser.setValue(user);
-                _authUser.removeSource(source);
-            }
-        });
     }
 
-    public MediatorLiveData<AuthResource<User>> getAuthUserLiveData() {
-        return _authUser;
+    public MediatorLiveData<AuthResource<User>> getAuthState() {
+        return mSessionManager.getAuthUser();
     }
 }

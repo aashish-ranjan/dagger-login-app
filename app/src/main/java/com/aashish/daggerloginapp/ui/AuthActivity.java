@@ -64,7 +64,7 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
     }
 
     private void subscribeObservers() {
-        mAuthViewModel.getAuthUserLiveData().observe(this, new Observer<AuthResource<User>>() {
+        mAuthViewModel.getAuthState().observe(this, new Observer<AuthResource<User>>() {
             @Override
             public void onChanged(AuthResource<User> user) {
                 switch (user.status) {
@@ -107,7 +107,7 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
 
     private void attemptLogin(String userId) {
          if (!TextUtils.isEmpty(userId)) {
-             mAuthViewModel.getUserInfo(userId);
+             mAuthViewModel.attemptLoginByUserId(userId);
          } else {
              Toast.makeText(AuthActivity.this, "Enter a valid user id", Toast.LENGTH_SHORT).show();
          }
