@@ -65,4 +65,7 @@ dependencies {
 
     def rxJavaVersion = "3.0.0"
     implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
+
+    def rxJavaReactiveStreamVersion = "2.4.1"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$rxJavaReactiveStreamVersion"
 }
