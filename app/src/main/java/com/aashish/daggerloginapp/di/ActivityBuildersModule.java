@@ -15,7 +15,7 @@ public abstract class ActivityBuildersModule {
     abstract AuthActivity contributesAuthActivity();
 
     @ContributesAndroidInjector (
-            modules = {MainFragmentBuildersModule.class}
+            modules = {MainViewModelsModule.class, MainFragmentBuildersModule.class}
     )
     abstract MainActivity contributesMainActivity();
 }
