@@ -3,6 +3,7 @@ package com.aashish.daggerloginapp.di.main;
 import androidx.lifecycle.ViewModel;
 
 import com.aashish.daggerloginapp.di.ViewModelKey;
+import com.aashish.daggerloginapp.viewmodels.PostsViewModel;
 import com.aashish.daggerloginapp.viewmodels.ProfileViewModel;
 
 import dagger.Binds;
@@ -16,4 +17,9 @@ public abstract class MainViewModelsModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel.class)
     abstract ViewModel bindsProfileViewModel(ProfileViewModel profileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PostsViewModel.class)
+    abstract ViewModel bindsPostsViewModel(PostsViewModel postsViewModel);
 }

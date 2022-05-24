@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.aashish.daggerloginapp.R;
-import com.aashish.daggerloginapp.ui.profile.ProfileFragment;
+import com.aashish.daggerloginapp.ui.posts.PostsFragment;
 
 public class MainActivity extends BaseActivity{
     private static final String TAG = "MainActivity";
@@ -20,12 +20,12 @@ public class MainActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addProfileFragment();
+        addPostsFragment();
     }
 
-    private void addProfileFragment() {
+    private void addPostsFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainContainer, new ProfileFragment())
+                .replace(R.id.mainContainer, new PostsFragment())
                 .commit();
     }
 
