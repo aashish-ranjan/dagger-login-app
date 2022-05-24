@@ -29,7 +29,7 @@ public class BaseActivity extends DaggerAppCompatActivity {
     }
 
     private void subscribeObservers() {
-        mSessionManager.getAuthUser().observe(this, new Observer<AuthResource<User>>() {
+        mSessionManager.getAuthenticatedUser().observe(this, new Observer<AuthResource<User>>() {
             @Override
             public void onChanged(AuthResource<User> user) {
                 switch (user.status) {

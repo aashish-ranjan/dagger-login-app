@@ -8,7 +8,9 @@ import com.aashish.daggerloginapp.models.AuthResource;
 import com.aashish.daggerloginapp.models.User;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class SessionManager {
     private final MediatorLiveData<AuthResource<User>> _cachedUser = new MediatorLiveData<>();
 
@@ -31,7 +33,7 @@ public class SessionManager {
         _cachedUser.setValue(AuthResource.logout());
     }
 
-    public MediatorLiveData<AuthResource<User>> getAuthUser() {
+    public MediatorLiveData<AuthResource<User>> getAuthenticatedUser() {
         return _cachedUser;
     }
 }

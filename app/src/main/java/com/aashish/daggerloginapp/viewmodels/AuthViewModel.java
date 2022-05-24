@@ -60,6 +60,6 @@ public class AuthViewModel extends ViewModel {
     }
 
     public MediatorLiveData<AuthResource<User>> getAuthState() {
-        return mSessionManager.getAuthUser();
+        return mSessionManager.getAuthenticatedUser();
     }
 }
