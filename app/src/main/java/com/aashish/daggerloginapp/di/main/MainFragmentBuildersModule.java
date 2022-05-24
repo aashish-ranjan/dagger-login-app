@@ -1,4 +1,4 @@
-package com.aashish.daggerloginapp.di;
+package com.aashish.daggerloginapp.di.main;
 
 import com.aashish.daggerloginapp.ui.profile.ProfileFragment;
 

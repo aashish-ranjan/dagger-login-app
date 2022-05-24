@@ -1,5 +1,9 @@
 package com.aashish.daggerloginapp.di;
 
+import com.aashish.daggerloginapp.di.auth.AuthModule;
+import com.aashish.daggerloginapp.di.auth.AuthViewModelsModule;
+import com.aashish.daggerloginapp.di.main.MainFragmentBuildersModule;
+import com.aashish.daggerloginapp.di.main.MainViewModelsModule;
 import com.aashish.daggerloginapp.ui.AuthActivity;
 import com.aashish.daggerloginapp.ui.MainActivity;
 

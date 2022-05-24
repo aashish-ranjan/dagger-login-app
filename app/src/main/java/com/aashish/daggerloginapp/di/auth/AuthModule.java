@@ -1,4 +1,4 @@
-package com.aashish.daggerloginapp.di;
+package com.aashish.daggerloginapp.di.auth;
 
 import com.aashish.daggerloginapp.network.auth.AuthApi;
 

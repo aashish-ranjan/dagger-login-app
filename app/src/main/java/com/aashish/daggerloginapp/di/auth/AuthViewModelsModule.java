@@ -1,7 +1,8 @@
-package com.aashish.daggerloginapp.di;
+package com.aashish.daggerloginapp.di.auth;
 
 import androidx.lifecycle.ViewModel;
 
+import com.aashish.daggerloginapp.di.ViewModelKey;
 import com.aashish.daggerloginapp.viewmodels.AuthViewModel;
 
 import dagger.Binds;
