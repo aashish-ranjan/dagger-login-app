@@ -95,7 +95,6 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
 
     private void navigateToHome(User user) {
         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-        intent.putExtra("user_info", user.toString());
         startActivity(intent);
     }
 

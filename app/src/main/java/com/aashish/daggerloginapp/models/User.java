@@ -50,10 +50,4 @@ public class User {
     public void setWebsite(String website) {
         this.website = website;
     }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return String.format("Id: %s\nUserName: %s\nEmail: %s\nWebsite: %s", id, userName, email, website);
-    }
 }

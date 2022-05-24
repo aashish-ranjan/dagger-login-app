@@ -10,21 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.aashish.daggerloginapp.R;
+import com.aashish.daggerloginapp.ui.profile.ProfileFragment;
 
 public class MainActivity extends BaseActivity{
     private static final String TAG = "MainActivity";
-
-    private TextView mTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String userInfo = getIntent().getStringExtra("user_info");
-        mTextView = findViewById(R.id.textView);
-        if (userInfo != null) {
-            mTextView.setText(userInfo);
-        }
+
+        addProfileFragment();
+    }
+
+    private void addProfileFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainContainer, new ProfileFragment())
+                .commit();
     }
 
     @Override
