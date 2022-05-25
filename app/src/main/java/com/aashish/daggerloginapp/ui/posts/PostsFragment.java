@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.aashish.daggerloginapp.R;
 import com.aashish.daggerloginapp.models.Post;
@@ -25,8 +27,12 @@ import dagger.android.support.DaggerFragment;
 
 public class PostsFragment extends DaggerFragment {
     private static final String TAG = "PostsFragment";
+    private RecyclerView mPostRecyclerView;
 
     private PostsViewModel mPostsViewModel;
+
+    @Inject
+    PostsRecyclerViewAdapter adapter;
 
     @Inject
     ViewModelProviderFactory mViewModelProviderFactory;
@@ -40,6 +46,7 @@ public class PostsFragment extends DaggerFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPostRecyclerView = view.findViewById(R.id.rvPosts);
         mPostsViewModel = new ViewModelProvider(this, mViewModelProviderFactory).get(PostsViewModel.class);
         subscribeObservers();
     }
@@ -52,7 +59,7 @@ public class PostsFragment extends DaggerFragment {
                     switch (postListResponse.status) {
                         case SUCCESS: {
                             Log.d(TAG, "onChanged: Posts fetched successfully");
-                            Log.d(TAG, "onChanged: sample post: " + postListResponse.data.get(0).getBody());
+                            initRecyclerView(postListResponse.data);
                             break;
                         }
                         case LOADING: {
@@ -67,5 +74,11 @@ public class PostsFragment extends DaggerFragment {
                 }
             }
         });
+    }
+
+    private void initRecyclerView(List<Post> postList) {
+        adapter.setPosts(postList);
+        mPostRecyclerView.setAdapter(adapter);
+        mPostRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }
