@@ -4,29 +4,39 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.aashish.daggerloginapp.R;
-import com.aashish.daggerloginapp.ui.posts.PostsFragment;
+import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+    private NavController mNavController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addPostsFragment();
+        mNavigationView = findViewById(R.id.navigationView);
+        mDrawerLayout = findViewById(R.id.drawerLayout);
+
+        initNavigation();
     }
 
-    private void addPostsFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainContainer, new PostsFragment())
-                .commit();
+    private void initNavigation() {
+        mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, mNavController, mDrawerLayout);
+        NavigationUI.setupWithNavController(mNavigationView, mNavController);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -43,5 +53,20 @@ public class MainActivity extends BaseActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_menu_item_profile:
+                mNavController.navigate(R.id.profileFragment);
+                break;
+            case R.id.nav_menu_item_posts:
+                mNavController.navigate(R.id.postsFragment);
+                break;
+        }
+        item.setChecked(true);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
