@@ -51,6 +51,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (item.getItemId() == R.id.menu_item_logout) {
                 mSessionManager.logout();
                 return true;
+        } else if (item.getItemId() == android.R.id.home){
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else {
+                return false;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -68,5 +75,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         item.setChecked(true);
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(mNavController, mDrawerLayout);
     }
 }
