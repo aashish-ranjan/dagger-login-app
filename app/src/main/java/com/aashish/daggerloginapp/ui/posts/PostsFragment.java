@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import dagger.android.support.DaggerFragment;
 public class PostsFragment extends DaggerFragment {
     private static final String TAG = "PostsFragment";
     private RecyclerView mPostRecyclerView;
+    private ProgressBar mProgressBar;
 
     private PostsViewModel mPostsViewModel;
 
@@ -47,6 +49,7 @@ public class PostsFragment extends DaggerFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPostRecyclerView = view.findViewById(R.id.rvPosts);
+        mProgressBar = view.findViewById(R.id.postsProgressBar);
         mPostsViewModel = new ViewModelProvider(this, mViewModelProviderFactory).get(PostsViewModel.class);
         subscribeObservers();
     }
@@ -58,23 +61,38 @@ public class PostsFragment extends DaggerFragment {
                 if (postListResponse != null) {
                     switch (postListResponse.status) {
                         case SUCCESS: {
+                            showProgressBar(false);
                             Log.d(TAG, "onChanged: Posts fetched successfully");
                             initRecyclerView(postListResponse.data);
                             break;
                         }
                         case LOADING: {
+                            showProgressBar(true);
                             Log.d(TAG, "onChanged: fetching posts..");
                             break;
                         }
                         case ERROR: {
+                            showProgressBar(false);
                             Log.e(TAG, "onChanged: Error fetching posts");
                             break;
+                        }
+                        default: {
+                            showProgressBar(false);
                         }
                     }
                 }
             }
         });
     }
+
+    private void showProgressBar(Boolean showProgress) {
+        if (showProgress) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+        }
+    }
+
 
     private void initRecyclerView(List<Post> postList) {
         adapter.setPosts(postList);
