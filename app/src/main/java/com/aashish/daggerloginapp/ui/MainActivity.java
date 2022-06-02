@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
@@ -66,15 +67,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_menu_item_profile:
-                mNavController.navigate(R.id.profileFragment);
+                NavOptions navOptions = new NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_host_fragment, true)
+                                .build();
+                mNavController.navigate(R.id.profileFragment, null, navOptions);
                 break;
             case R.id.nav_menu_item_posts:
-                mNavController.navigate(R.id.postsFragment);
+                if (isValidDestination(R.id.postsFragment)) {
+                    mNavController.navigate(R.id.postsFragment);
+                }
                 break;
         }
         item.setChecked(true);
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private boolean isValidDestination(int destination) {
+        return destination != mNavController.getCurrentDestination().getId();
     }
 
     @Override
